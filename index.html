@@ -1,0 +1,79 @@
+<html ng-app="staticmap">
+  <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <style>
+    body{
+      margin:20px;
+      min-height:100%;
+    }
+    .latLonInput{
+      min-width:350px;
+    }
+    #latInputSpan, #latInput{
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    #lonInputSpan, #lonInput{
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+    #sampleImage{
+      text-align:center;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.16/clipboard.min.js"></script>
+
+  <script>
+    window.onload = function() {
+      var clipboard = new Clipboard('.btn');
+    }
+
+    angular.module('staticmap', []).controller('StaticMapController', function($scope) {
+      $scope.lat;
+      $scope.lon;
+    });
+  </script>
+</head>
+<body ng-controller="StaticMapController">
+  <div id="wrap">
+    <h1 align="center">Google Static Map Image & Map Link Generator</h1>
+    <p align="center" class="text-muted">Created by <a href="https://github.com/joshuasouders">Joshua Souders</a></p>
+    <div id="latLon">
+      <div class="input-group input-group-lg">
+        <span id="latInputSpan" class="input-group-addon latLonInput">Latitude (between 37 and 40)</span>
+        <input type="text" id="latInput" class="form-control" ng-model="lat"></input>
+      </div>
+      <div class="input-group input-group-lg">
+        <span id="lonInputSpan" class="input-group-addon latLonInput">Longitude (between -75 and -80)</span>
+        <input type="text" id="lonInput" class="form-control" ng-model="lon"></input>
+      </div>
+    </div>
+    <div id="url" ng-show="lat && lon">
+      <h2>Map Image</h2>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="imageButton" class="btn btn-default" type="button" data-clipboard-target="#imageURL">Copy</button>
+        </span>
+        <input id="imageURL" class="form-control" value="https://maps.googleapis.com/maps/api/staticmap?size=600x300&zoom=17&markers={{lat}},{{lon}}&key=AIzaSyDocN5FdpANWDjJhfctCaqNgF-JNuZIAUE"></input>
+      </div>
+      <h2>Map Link</h2>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="mapButton" class="btn btn-default" type="button" data-clipboard-target="#mapURL">Copy</button>
+        </span>
+        <input id="mapURL" class="form-control" value="http://maps.google.com/maps?q={{lat}},{{lon}}&ll={{lat}},{{lon}}&z=17z"></input>
+      </div>
+      <div id="sampleImage">
+        <h1 align="center">Sample Static Map Image</h1>
+        <a href="http://maps.google.com/maps?q={{lat}},{{lon}}&ll={{lat}},{{lon}}&z=17z"><img src="https://maps.googleapis.com/maps/api/staticmap?size=600x300&zoom=17&markers={{lat}},{{lon}}&key=AIzaSyDocN5FdpANWDjJhfctCaqNgF-JNuZIAUE"></a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
